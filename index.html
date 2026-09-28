@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizza &amp; Joy — Wah Cantt</title>
+<meta name="description" content="Pizza & Joy, New City Phase-2, Food Street, Wah Cantt. Pizzas, burgers, deals, ice cream. Order on WhatsApp 0327 8656675.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --char:#0f0a07;      /* charred oven */
+  --char-2:#18110c;
+  --char-3:#241912;
+  --ember:#ff7a1a;     /* wood-fire ember */
+  --cheese:#ffc34d;    /* melted cheese */
+  --tomato:#e0402a;
+  --cream:#f5e9d6;
+  --muted:#b9a58d;
+  --line:rgba(255,195,77,.14);
+  --r-lg:28px; --r-md:18px; --r-sm:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--char);color:var(--cream);font-family:Manrope,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque",sans-serif;line-height:1.05;letter-spacing:-.02em}
+a{color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--cheese);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1180px,100% - 32px);margin-inline:auto}
+
+/* ---------- NAV ---------- */
+nav.top{position:fixed;inset:0 0 auto;z-index:50;transition:background .3s,backdrop-filter .3s}
+nav.top.solid{background:rgba(15,10,7,.78);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+.brand{font-family:"Bricolage Grotesque";font-weight:800;font-size:1.45rem;text-decoration:none;display:flex;align-items:center;gap:.5rem}
+.brand b{color:var(--cheese)}
+.brand .dot{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--cheese),var(--ember) 60%,var(--tomato));box-shadow:0 0 18px rgba(255,122,26,.6)}
+.navlinks{display:flex;gap:1.6rem;font-weight:500;font-size:.95rem}
+.navlinks a{text-decoration:none;color:var(--muted);transition:color .2s}
+.navlinks a:hover{color:var(--cream)}
+.btn{display:inline-flex;align-items:center;gap:.55rem;padding:.8rem 1.35rem;border-radius:999px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font-family:inherit;font-size:.95rem;transition:transform .2s,box-shadow .2s}
+.btn-fire{background:linear-gradient(135deg,var(--cheese),var(--ember));color:#1a0c02;box-shadow:0 8px 30px rgba(255,122,26,.35)}
+.btn-fire:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,122,26,.55)}
+.btn-ghost{border:1px solid var(--line);color:var(--cream);background:rgba(255,255,255,.03)}
+.btn-ghost:hover{border-color:var(--cheese)}
+.wa-ico{width:18px;height:18px;flex:none}
+@media(max-width:820px){.navlinks{display:none}}
+
+/* ---------- HERO (3D) ---------- */
+.hero{position:relative;height:220vh}
+.hero-stage{position:sticky;top:0;height:100vh;overflow:hidden}
+#pizza3d{position:absolute;inset:0;width:100%;height:100%}
+.hero-glow{position:absolute;inset:0;background:radial-gradient(60% 55% at 70% 55%,rgba(255,122,26,.22),transparent 70%),radial-gradient(40% 40% at 15% 20%,rgba(224,64,42,.12),transparent 70%);pointer-events:none}
+.hero-copy{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);pointer-events:none}
+.hero-copy .wrap{pointer-events:none}
+.hero-copy h1{font-size:clamp(3.2rem,9vw,8.4rem);font-weight:800;max-width:9ch}
+.hero-copy h1 .amp{display:inline-block;color:transparent;-webkit-text-stroke:2px var(--cheese)}
+.hero-copy p{margin-top:1.3rem;max-width:34ch;color:var(--muted);font-size:1.1rem}
+.hero-cta{margin-top:2rem;display:flex;gap:.8rem;flex-wrap:wrap;pointer-events:auto}
+.scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:.85rem;display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.scroll-hint span{width:1px;height:42px;background:linear-gradient(var(--cheese),transparent);animation:drip 1.8s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.slice-caption{position:absolute;right:max(16px,5vw);top:13vh;text-align:right;opacity:0;transition:opacity .4s}
+.slice-caption h3{font-size:clamp(1.6rem,3.4vw,2.6rem);color:var(--cheese)}
+.slice-caption p{color:var(--muted)}
+@media(max-width:820px){
+  .hero-copy{top:auto;bottom:12vh;transform:none}
+  .hero-copy h1{font-size:clamp(2.8rem,14vw,4.4rem)}
+  .slice-caption,.scroll-hint{display:none}
+}
+
+/* ---------- SECTIONS ---------- */
+section{padding:clamp(4.5rem,10vw,8rem) 0;position:relative}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:2rem;margin-bottom:2.8rem;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(2.3rem,5.4vw,4.2rem);font-weight:800;max-width:14ch}
+.sec-head p{color:var(--muted);max-width:40ch}
+.price{font-family:"Bricolage Grotesque";font-weight:800;color:var(--cheese);white-space:nowrap}
+
+/* marquee */
+.marquee{border-block:1px solid var(--line);overflow:hidden;padding:1.1rem 0;background:var(--char-2)}
+.marquee-track{display:flex;gap:3rem;width:max-content;animation:slide 32s linear infinite;font-family:"Bricolage Grotesque";font-size:clamp(1.3rem,2.6vw,2rem);font-weight:600;color:var(--muted)}
+.marquee-track i{font-style:normal;color:var(--ember)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* signature */
+.sig-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
+.sig{position:relative;padding:2.2rem;border-radius:var(--r-lg);background:linear-gradient(160deg,var(--char-3),var(--char-2));border:1px solid var(--line);overflow:hidden;min-height:330px;transform-style:preserve-3d;transition:transform .25s ease}
+.sig h3{font-size:clamp(1.8rem,3.2vw,2.6rem);max-width:12ch}
+.sig .tag{display:inline-block;margin-top:.8rem;padding:.3rem .8rem;border-radius:999px;background:rgba(224,64,42,.18);color:#ff8b73;font-size:.85rem;font-weight:700}
+.sig .sizes{display:flex;gap:1.6rem;margin-top:2.2rem;flex-wrap:wrap}
+.sig .sizes div{display:flex;flex-direction:column}
+.sig .sizes small{color:var(--muted);font-size:.85rem}
+.sig .sizes .price{font-size:1.7rem}
+.sig .disc{position:absolute;right:-70px;bottom:-70px;width:250px;height:250px;border-radius:50%;background:
+  radial-gradient(circle at 30% 35%,var(--tomato) 0 9%,transparent 10%),
+  radial-gradient(circle at 62% 28%,var(--tomato) 0 8%,transparent 9%),
+  radial-gradient(circle at 48% 60%,var(--tomato) 0 9%,transparent 10%),
+  radial-gradient(circle at 25% 68%,#2b1a10 0 4%,transparent 5%),
+  radial-gradient(circle at 70% 55%,#2b1a10 0 4%,transparent 5%),
+  radial-gradient(circle,var(--cheese) 0 62%,#c9781f 63% 72%,#8f4f16 73%);opacity:.9;transform:translateZ(40px);box-shadow:0 0 60px rgba(255,122,26,.25)}
+@media(max-width:760px){.sig-grid{grid-template-columns:1fr}}
+
+/* size switch pizzas */
+.size-switch{display:inline-flex;padding:5px;border-radius:999px;background:var(--char-2);border:1px solid var(--line);gap:4px;flex-wrap:wrap}
+.size-switch button{border:0;background:transparent;color:var(--muted);font:700 .9rem Manrope;padding:.55rem 1.1rem;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.size-switch button[aria-pressed="true"]{background:var(--cheese);color:#1a0c02}
+.pz-list{display:grid;grid-template-columns:repeat(2,1fr);gap:0 3rem;margin-top:2rem}
+.pz{display:grid;grid-template-columns:1fr auto;gap:.2rem 1rem;padding:1.3rem 0;border-bottom:1px dashed var(--line)}
+.pz h4{font-size:1.35rem;font-weight:600}
+.pz p{grid-column:1/-1;color:var(--muted);font-size:.92rem}
+.pz .price{font-size:1.3rem;transition:transform .3s}
+.pz .price.bump{animation:bump .35s}
+@keyframes bump{50%{transform:scale(1.18)}}
+.special-note{margin-top:3.5rem;padding:1.3rem 1.6rem;border-radius:var(--r-md);background:rgba(255,195,77,.06);border:1px solid var(--line);color:var(--muted)}
+@media(max-width:760px){.pz-list{grid-template-columns:1fr}}
+
+/* deals */
+.tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.tabs button{border:1px solid var(--line);background:var(--char-2);color:var(--muted);font:700 .95rem Manrope;padding:.7rem 1.2rem;border-radius:999px;cursor:pointer;transition:all .2s}
+.tabs button[aria-selected="true"]{background:var(--cream);color:var(--char);border-color:var(--cream)}
+.deal-note{color:var(--muted);margin-bottom:1.6rem;min-height:1.6em}
+.deal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.1rem;perspective:1000px}
+.deal{position:relative;padding:1.6rem 1.5rem 1.4rem;border-radius:var(--r-md);background:var(--char-2);border:1px solid var(--line);display:flex;flex-direction:column;transform-style:preserve-3d;transition:transform .2s ease,border-color .2s}
+.deal:hover{border-color:rgba(255,195,77,.45)}
+.deal .n{font-family:"Bricolage Grotesque";font-size:.95rem;color:var(--ember);font-weight:700}
+.deal h4{font-size:1.5rem;margin:.2rem 0 .9rem}
+.deal ul{list-style:none;flex:1}
+.deal li{padding:.28rem 0;color:var(--cream);font-size:.97rem;display:flex;gap:.6rem}
+.deal li b{color:var(--cheese);min-width:1.4rem}
+.deal li em{font-style:normal;font-size:.75rem;background:rgba(255,122,26,.18);color:var(--ember);padding:.05rem .45rem;border-radius:6px;align-self:center}
+.deal .foot{display:flex;justify-content:space-between;align-items:end;margin-top:1.3rem;padding-top:1rem;border-top:1px solid var(--line)}
+.deal .foot .price{font-size:1.9rem}
+.deal .order{font-size:.85rem;font-weight:700;color:var(--muted);text-decoration:none}
+.deal .order:hover{color:var(--cheese)}
+
+/* a la carte */
+.carte{display:grid;grid-template-columns:repeat(3,1fr);gap:2.6rem 3rem}
+.cat h3{font-size:1.7rem;margin-bottom:.8rem;display:flex;align-items:center;gap:.6rem}
+.cat h3::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--ember);box-shadow:0 0 12px var(--ember)}
+.row{display:flex;align-items:baseline;gap:.6rem;padding:.55rem 0}
+.row .nm{flex:none}
+.row .nm small{display:block;color:var(--muted);font-size:.8rem}
+.row .fill{flex:1;border-bottom:1px dotted rgba(245,233,214,.2);transform:translateY(-4px)}
+.row .price{font-size:1.05rem}
+@media(max-width:980px){.carte{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.carte{grid-template-columns:1fr}}
+
+/* happy hour */
+.happy{background:linear-gradient(180deg,var(--char) 0%,#1d0f08 40%,var(--char) 100%)}
+.clock-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.2rem}
+.clock{padding:1rem 1.4rem;border-radius:var(--r-md);border:1px solid var(--line);background:var(--char-2)}
+.clock strong{display:block;font-family:"Bricolage Grotesque";font-size:1.6rem;color:var(--cheese)}
+.clock span{color:var(--muted);font-size:.9rem}
+.live{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .9rem;border-radius:999px;font-weight:700;font-size:.85rem}
+.live.on{background:rgba(80,200,120,.15);color:#7ee2a0}
+.live.off{background:rgba(255,255,255,.05);color:var(--muted)}
+.live i{width:8px;height:8px;border-radius:50%;background:currentColor}
+.live.on i{animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.3}}
+
+/* ice cream */
+.scoops{display:grid;grid-template-columns:repeat(9,1fr);gap:.8rem;margin-bottom:2.4rem}
+.scoop{text-align:center;font-size:.85rem;color:var(--muted)}
+.scoop .ball{aspect-ratio:1;border-radius:50% 50% 46% 46%;margin-bottom:.5rem;box-shadow:inset -8px -10px 18px rgba(0,0,0,.35),inset 6px 6px 14px rgba(255,255,255,.35);transition:transform .3s}
+.scoop:hover .ball{transform:translateY(-6px) rotate(-6deg)}
+.ice-prices{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.ice-card{padding:1.5rem;border-radius:var(--r-md);background:var(--char-2);border:1px solid var(--line)}
+.ice-card h4{font-size:1.3rem;margin-bottom:.3rem}
+.ice-card p{color:var(--muted);font-size:.9rem}
+.ice-card .price{font-size:2rem;display:block;margin-top:.8rem}
+@media(max-width:900px){.scoops{grid-template-columns:repeat(5,1fr)}.ice-prices{grid-template-columns:1fr}}
+@media(max-width:480px){.scoops{grid-template-columns:repeat(3,1fr)}}
+
+/* visit */
+.visit{display:grid;grid-template-columns:1.2fr 1fr;gap:1.4rem}
+.visit-card{padding:2.4rem;border-radius:var(--r-lg);background:var(--char-2);border:1px solid var(--line)}
+.visit-card.hot{background:radial-gradient(120% 120% at 100% 0%,rgba(255,122,26,.35),transparent 60%),var(--char-3)}
+.visit-card h3{font-size:clamp(1.8rem,3.4vw,2.6rem);margin-bottom:1rem}
+.bignum{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(2.2rem,5.5vw,3.8rem);color:var(--cheese);text-decoration:none;display:block;margin:.6rem 0 1.4rem}
+.modes{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.4rem}
+.modes span{padding:.45rem .95rem;border-radius:999px;border:1px solid var(--line);font-size:.9rem;color:var(--muted)}
+.visit-card address{font-style:normal;color:var(--muted);font-size:1.05rem}
+@media(max-width:820px){.visit{grid-template-columns:1fr}}
+
+/* credit */
+.credit{padding:5rem 0 3rem;border-top:1px solid var(--line);background:linear-gradient(180deg,var(--char),#080504)}
+.credit-card{display:grid;grid-template-columns:auto 1fr auto;gap:2rem;align-items:center;padding:2rem;border-radius:var(--r-lg);border:1px solid var(--line);background:linear-gradient(135deg,rgba(255,195,77,.07),rgba(255,122,26,.02))}
+.avatar{width:120px;height:120px;border-radius:50%;padding:4px;background:conic-gradient(var(--cheese),var(--ember),var(--tomato),var(--cheese));position:relative}
+.avatar img,.avatar .ini{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:center 20%;background:var(--char-3)}
+.avatar .ini{display:none;align-items:center;justify-content:center;font-family:"Bricolage Grotesque";font-weight:800;font-size:2.4rem;color:var(--cheese)}
+.credit-card small{color:var(--muted)}
+.credit-card h3{font-size:clamp(1.6rem,3vw,2.2rem);margin:.2rem 0}
+.credit-card p{color:var(--muted);max-width:44ch}
+.foot-line{margin-top:2.4rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.85rem}
+@media(max-width:760px){.credit-card{grid-template-columns:1fr;text-align:center;justify-items:center}}
+
+/* floating WA */
+.fab{position:fixed;right:18px;bottom:18px;z-index:60;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px rgba(37,211,102,.45);transition:transform .2s}
+.fab:hover{transform:scale(1.08)}
+.fab svg{width:30px;height:30px}
+
+
+/* ================= MOBILE: app-style (Foodpanda-like sizing) ================= */
+.chips,.mbar{display:none}
+@media(max-width:760px){
+  html{font-size:15px;scroll-padding-top:112px}
+  body{padding-bottom:84px}
+  nav.top{background:rgba(15,10,7,.9);backdrop-filter:blur(14px)}
+  nav.top .wrap{height:56px}
+  nav.top .btn{display:none}
+  .brand{font-size:1.2rem}
+  .brand .dot{width:24px;height:24px}
+  /* sticky category chips */
+  .chips{display:flex;position:fixed;top:56px;left:0;right:0;z-index:49;gap:.5rem;overflow-x:auto;padding:.55rem 16px;background:rgba(15,10,7,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);scrollbar-width:none;transform:translateY(-110%);transition:transform .3s}
+  .chips.show{transform:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chips a{flex:none;text-decoration:none;font-size:.85rem;font-weight:700;padding:.45rem .95rem;border-radius:999px;background:var(--char-3);color:var(--muted);border:1px solid var(--line);transition:background .2s,color .2s}
+  .chips a.on{background:var(--cheese);color:#1a0c02;border-color:var(--cheese)}
+  /* bottom order bar */
+  .fab{display:none}
+  .mbar{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:60;gap:.5rem;padding:.45rem;border-radius:18px;background:rgba(24,17,12,.95);backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+  .mbar a{display:flex;align-items:center;justify-content:center;gap:.5rem;text-decoration:none;font-weight:800;border-radius:13px;padding:.8rem;font-size:.95rem}
+  .mbar .wa{flex:1;background:linear-gradient(135deg,var(--cheese),var(--ember));color:#1a0c02}
+  .mbar .call{width:52px;background:var(--char-3);color:var(--cream);border:1px solid var(--line)}
+  .mbar svg{width:20px;height:20px}
+
+  .hero{height:170vh}
+  .hero-copy p{font-size:.95rem;margin-top:.8rem}
+  .hero-cta{margin-top:1.3rem}
+  .hero-cta .btn{padding:.7rem 1.1rem;font-size:.9rem}
+
+  section{padding:2.6rem 0}
+  .sec-head{margin-bottom:1.2rem;gap:.6rem}
+  .sec-head h2{font-size:1.65rem}
+  .sec-head p{font-size:.88rem}
+  .marquee{padding:.7rem 0}
+  .marquee-track{font-size:1.05rem;gap:1.6rem}
+
+  /* signature: compact cards */
+  .sig-grid{gap:.8rem}
+  .sig{min-height:0;padding:1.2rem 1.2rem 1.3rem;border-radius:20px}
+  .sig h3{font-size:1.35rem;max-width:11ch}
+  .sig .tag{font-size:.75rem;margin-top:.5rem}
+  .sig .sizes{gap:1rem;margin-top:1rem}
+  .sig .sizes .price{font-size:1.1rem}
+  .sig .sizes small{font-size:.75rem}
+  .sig .disc{width:140px;height:140px;right:-38px;top:-30px;bottom:auto}
+
+  /* pizzas: Foodpanda-style item rows */
+  .size-switch{display:grid;grid-template-columns:repeat(4,1fr);width:100%}
+  .size-switch button{padding:.55rem .2rem;font-size:.85rem}
+  .pz-list{margin-top:.6rem;gap:.6rem}
+  .pz{padding:.85rem 1rem;border:1px solid var(--line);border-radius:14px;background:var(--char)}
+  #pizzas .pz{background:var(--char)}
+  .pz h4{font-size:1rem}
+  .pz .price{font-size:1rem}
+  .pz p{font-size:.8rem;line-height:1.45}
+  #pizzas .sec-head[style]{margin-top:2.4rem!important}
+  .special-note{margin-top:1.4rem;font-size:.82rem;padding:.9rem 1rem}
+
+  /* deals: swipe carousel with 3D coverflow */
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -16px 1rem;padding:0 16px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:none;font-size:.85rem;padding:.55rem 1rem}
+  .deal-note{font-size:.85rem;margin-bottom:.8rem}
+  .deal-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:.8rem;margin:0 -16px;padding:.6rem 16px 1.2rem;scrollbar-width:none;perspective:900px}
+  .deal-grid::-webkit-scrollbar{display:none}
+  .deal{flex:0 0 76%;scroll-snap-align:center;padding:1.1rem 1.1rem 1rem;border-radius:16px;will-change:transform}
+  .deal li{font-size:.88rem;padding:.2rem 0}
+  .deal .foot{margin-top:.8rem;padding-top:.7rem}
+  .deal .foot .price{font-size:1.35rem}
+  .dots{display:flex;justify-content:center;gap:6px;margin-top:.2rem}
+  .dots i{width:6px;height:6px;border-radius:9px;background:var(--line);transition:width .25s,background .25s}
+  .dots i.on{width:18px;background:var(--cheese)}
+
+  .clock-row{gap:.6rem;margin-bottom:1rem}
+  .clock{flex:1;padding:.75rem .9rem}
+  .clock strong{font-size:1.05rem}
+  .clock span{font-size:.75rem}
+  .live{font-size:.75rem}
+
+  /* full menu: compact rows */
+  .carte{gap:1.6rem}
+  .cat{background:var(--char);border:1px solid var(--line);border-radius:16px;padding:1rem 1rem .4rem}
+  .cat h3{font-size:1.15rem;margin-bottom:.3rem}
+  .row{padding:.5rem 0;font-size:.9rem;border-bottom:1px solid rgba(255,195,77,.06)}
+  .row:last-child{border-bottom:0}
+  .row .fill{border:0}
+  .row .price{font-size:.92rem}
+
+  /* ice cream */
+  .scoops{display:flex;overflow-x:auto;gap:.9rem;margin:0 -16px 1.2rem;padding:.4rem 16px;scrollbar-width:none}
+  .scoops::-webkit-scrollbar{display:none}
+  .scoop{flex:0 0 64px;font-size:.75rem}
+  .ice-prices{gap:.6rem}
+  .ice-card{padding:1rem;display:grid;grid-template-columns:1fr auto;align-items:center;gap:0 1rem}
+  .ice-card h4{font-size:1rem}
+  .ice-card p{font-size:.8rem;grid-column:1}
+  .ice-card .price{font-size:1.1rem;margin:0;grid-row:1/3;grid-column:2}
+
+  .visit{gap:.8rem}
+  .visit-card{padding:1.3rem;border-radius:20px}
+  .visit-card h3{font-size:1.4rem;margin-bottom:.5rem}
+  .bignum{font-size:2rem;margin:.3rem 0 1rem}
+  .visit-card .btn{padding:.7rem 1.1rem;font-size:.9rem}
+
+  .credit{padding:2.6rem 0 2rem}
+  .credit-card{padding:1.4rem;gap:1rem}
+  .avatar{width:96px;height:96px}
+  .credit-card h3{font-size:1.4rem}
+  .credit-card p{font-size:.88rem}
+  .tilt:active{transform:scale(.98)}
+}
+
+/* reveal (one orchestrated system) */
+.rv{opacity:0;transform:translateY(40px) rotateX(12deg);transform-origin:top;transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<nav class="top" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand"><span class="dot"></span>Pizza <b>&amp;</b> Joy</a>
+    <div class="navlinks">
+      <a href="#signature">Signature</a>
+      <a href="#pizzas">Pizzas</a>
+      <a href="#deals">Deals</a>
+      <a href="#menu">Menu</a>
+      <a href="#happy">Happy hour</a>
+      <a href="#visit">Visit</a>
+    </div>
+    <a class="btn btn-fire" href="https://wa.me/923278656675?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20place%20an%20order" target="_blank" rel="noopener">
+      <svg class="wa-ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"/></svg>
+      Order now
+    </a>
+  </div>
+</nav>
+
+<div class="chips" id="chips">
+  <a href="#signature">Signature</a><a href="#pizzas">Pizzas</a><a href="#deals">Deals</a><a href="#happy">Happy hour</a><a href="#menu">Menu</a><a href="#icecream">Ice cream</a><a href="#visit">Visit</a>
+</div>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-stage">
+    <canvas id="pizza3d" aria-label="Rotating 3D pizza"></canvas>
+    <div class="hero-glow"></div>
+    <div class="hero-copy">
+      <div class="wrap">
+        <h1>Pizza <span class="amp">&amp;</span> Joy</h1>
+        <p>Taste in every bite. Fresh-baked pizzas, crispy burgers and loaded deals from Food Street, Wah Cantt.</p>
+        <div class="hero-cta">
+          <a class="btn btn-fire" href="https://wa.me/923278656675" target="_blank" rel="noopener">WhatsApp 0327 8656675</a>
+          <a class="btn btn-ghost" href="#deals">See the deals</a>
+        </div>
+      </div>
+    </div>
+    <div class="slice-caption" id="sliceCap">
+      <h3>Pulled fresh from the oven</h3>
+      <p>Eight slices. Zero leftovers.</p>
+    </div>
+    <div class="scroll-hint">Scroll to slice<span></span></div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marq"></div>
+</div>
+
+<!-- SIGNATURE -->
+<section id="signature">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>The two we're known for</h2>
+      <p>Our house signatures, baked in medium, large and party sizes.</p>
+    </div>
+    <div class="sig-grid">
+      <article class="sig rv tilt">
+        <h3>Joy's Special Pizza</h3>
+        <span class="tag">House signature</span>
+        <div class="sizes">
+          <div><small>Medium</small><span class="price">Rs 1,470</span></div>
+          <div><small>Large</small><span class="price">Rs 1,999</span></div>
+          <div><small>Party</small><span class="price">Rs 2,999</span></div>
+        </div>
+        <div class="disc"></div>
+      </article>
+      <article class="sig rv tilt">
+        <h3>Malai Boti Pizza</h3>
+        <span class="tag">Extreme spicy</span>
+        <div class="sizes">
+          <div><small>Medium</small><span class="price">Rs 1,470</span></div>
+          <div><small>Large</small><span class="price">Rs 1,999</span></div>
+          <div><small>Party</small><span class="price">Rs 2,999</span></div>
+        </div>
+        <div class="disc"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PIZZAS -->
+<section id="pizzas" style="background:var(--char-2)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>Pick a flavour, pick a size</h2>
+      <div class="size-switch" role="group" aria-label="Pizza size" id="sizeSwitch">
+        <button aria-pressed="false" data-s="0">Small</button>
+        <button aria-pressed="true" data-s="1">Medium</button>
+        <button aria-pressed="false" data-s="2">Large</button>
+        <button aria-pressed="false" data-s="3">Party</button>
+      </div>
+    </div>
+    <div class="pz-list" id="pzList"></div>
+    <div class="sec-head rv" style="margin-top:5rem">
+      <h2>Special pizzas</h2>
+      <p>Special sauce, loaded toppings. Medium, large and party only.</p>
+    </div>
+    <div class="pz-list" id="spList"></div>
+    <p class="special-note rv">Extra topping, chicken or cheese: Small Rs 120 · Regular Rs 180 · Large Rs 250 · Party Rs 350</p>
+  </div>
+</section>
+
+<!-- DEALS -->
+<section id="deals">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>Deals built for sharing</h2>
+      <p>Tap a deal's price to order it straight on WhatsApp.</p>
+    </div>
+    <div class="tabs" role="tablist" id="dealTabs"></div>
+    <p class="deal-note" id="dealNote"></p>
+    <div class="deal-grid" id="dealGrid"></div>
+    <div class="dots" id="dealDots"></div>
+  </div>
+</section>
+
+<!-- HAPPY HOUR -->
+<section id="happy" class="happy">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>Happy hour deals</h2>
+      <span class="live off" id="liveBadge"><i></i><span>Checking time…</span></span>
+    </div>
+    <div class="clock-row rv">
+      <div class="clock"><strong>12 PM – 6 PM</strong><span>Afternoon window</span></div>
+      <div class="clock"><strong>12 AM – 3 AM</strong><span>Late-night window</span></div>
+    </div>
+    <div class="deal-grid" id="happyGrid"></div>
+    <div class="dots" id="happyDots"></div>
+  </div>
+</section>
+
+<!-- A LA CARTE -->
+<section id="menu" style="background:var(--char-2)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>The full menu</h2>
+      <p>Starters to sandwiches, everything à la carte.</p>
+    </div>
+    <div class="carte" id="carte"></div>
+  </div>
+</section>
+
+<!-- ICE CREAM -->
+<section id="icecream">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2>Finish on something cold</h2>
+      <p>Nine flavours, by the scoop or blended into a shake.</p>
+    </div>
+    <div class="scoops rv" id="scoops"></div>
+    <div class="ice-prices">
+      <div class="ice-card rv"><h4>Small cup</h4><p>1 scoop, any flavour</p><span class="price">Rs 150</span></div>
+      <div class="ice-card rv"><h4>Large cup</h4><p>2 scoops, mix flavours</p><span class="price">Rs 280</span></div>
+      <div class="ice-card rv"><h4>Ice cream shake</h4><p>Cold coffee, strawberry, vanilla, chocolate, mango, pistachio, kulfa, blueberry</p><span class="price">Rs 499 / glass</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section id="visit">
+  <div class="wrap">
+    <div class="visit">
+      <div class="visit-card hot rv">
+        <h3>Home delivery</h3>
+        <p style="color:var(--muted)">Call or WhatsApp your order.</p>
+        <a class="bignum" href="https://wa.me/923278656675" target="_blank" rel="noopener">0327 8656675</a>
+        <div style="display:flex;gap:.7rem;flex-wrap:wrap">
+          <a class="btn btn-fire" href="https://wa.me/923278656675" target="_blank" rel="noopener">Order on WhatsApp</a>
+          <a class="btn btn-ghost" href="tel:+923278656675">Call now</a>
+        </div>
+      </div>
+      <div class="visit-card rv">
+        <h3>Find us</h3>
+        <address>New City Phase-2, Food Street, Block-A,<br>Ground Floor, Numberdar Heights,<br>Wah Cantt</address>
+        <div class="modes"><span>Dining</span><span>Delivery</span><span>Take away</span></div>
+        <a class="btn btn-ghost" style="margin-top:1.6rem" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Pizza+and+Joy+New+City+Phase+2+Wah+Cantt">Open in Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDIT -->
+<footer class="credit">
+  <div class="wrap">
+    <div class="credit-card rv">
+      <div class="avatar">
+        <img src="shehroz.jpg" alt="Shehroz Khan" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="ini">SK</div>
+      </div>
+      <div>
+        <small>Website designed &amp; developed by</small>
+        <h3>Shehroz Khan</h3>
+        <p>Shehroz Digital Agency builds fast, premium websites for restaurants and local businesses. Want one like this?</p>
+      </div>
+      <a class="btn btn-fire" href="https://wa.me/923038029831?text=Hi%20Shehroz%2C%20I%20saw%20the%20Pizza%20%26%20Joy%20website" target="_blank" rel="noopener">WhatsApp Shehroz</a>
+    </div>
+    <div class="foot-line">
+      <span>© <span id="yr"></span> Pizza &amp; Joy, Wah Cantt. Taste in every bite.</span>
+      <span>Prices in PKR, subject to change.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="mbar">
+  <a class="wa" href="https://wa.me/923278656675?text=Assalam%20o%20Alaikum%2C%20I%20want%20to%20place%20an%20order" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"/></svg>Order on WhatsApp</a>
+  <a class="call" href="tel:+923278656675" aria-label="Call 0327 8656675"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></svg></a>
+</div>
+<a class="fab" href="https://wa.me/923278656675" target="_blank" rel="noopener" aria-label="Order on WhatsApp 0327 8656675">
+  <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"/></svg>
+</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* ================= DATA ================= */
+const WA = "https://wa.me/923278656675?text=";
+const rs = n => "Rs " + n.toLocaleString("en-US");
+
+const pizzas = [
+  ["Chicken Tikka","Pizza sauce, mix cheese, chicken tikka, onion"],
+  ["Chicken Supreme","Pizza sauce, mix cheese, chicken tikka, fajita, smoked sausages, onion, capsicum, mushroom, black olives"],
+  ["Chicken Fajita","Pizza sauce, mix cheese, chicken fajita, onion, capsicum"],
+  ["Cheese Lover","Pizza sauce, mix cheese"],
+  ["Vegetable Lover","Pizza sauce, mix cheese, onion, capsicum, jalapeño, sweet corn, tomato, black olive"],
+  ["Chicken Tandoori","Pizza sauce, mix cheese, chicken tikka, jalapeño, onion, black olive"],
+  ["Black Pepper","Pizza sauce, mix cheese, chicken, black pepper, onion, capsicum"],
+  ["Euro","Pizza sauce, mix cheese, smoked chicken, onion, capsicum, sausages, mushroom, tomato, black olive"]
+];
+const pzPrice = [650,1350,1850,2450];
+const specials = [
+  ["Royal Pizza","Special sauce, mix cheese, Mughlai / tikka chicken, onion, capsicum, black olives"],
+  ["Dough Stuff Pizza","Special sauce, mix cheese, seekh kabab, extreme chicken, onion, capsicum, mushroom, green olives"],
+  ["Shawarma Pizza","Garlic dip sauce, mix cheese, fajita chicken, onion, jalapeño"],
+  ["Behari Kabab Pizza","Special sauce, mix cheese, tikka chicken, onion, jalapeño, seekh kabab"]
+];
+const spPrice = [null,1470,1999,3050];
+
+const dealSets = {
+  "Pizza Wow": {note:"Pizza-led combos for the whole table.", items:[
+    ["Wow Deal 1",1999,[[1,"Medium pizza"],[6,"Oven bake wings"],[2,"Spin rolls","free"],[1,"1 liter drink"]]],
+    ["Wow Deal 2",2999,[[1,"Large pizza"],[1,"Medium pizza"],[1,"1.5 liter drink"]]],
+    ["Wow Deal 3",2499,[[1,"Large pizza"],[1,"Mexican sandwich"],[1,"1.5 liter drink"],[6,"Chicken popcorn","free"]]],
+    ["Wow Deal 4",3899,[[1,"Party pizza"],[1,"Crispy wrap"],[5,"Hot wings"],[1,"Fries"],[4,"Finger strips"],[1,"1.5 liter drink"]]],
+    ["Wow Deal 5",2199,[[1,"Medium pizza"],[2,"Crispy burgers"],[1,"Fries"],[1,"1 liter drink"]]],
+    ["Wow Deal 6",3399,[[1,"Large pizza"],[4,"Crispy burgers"],[1,"Fries"],[1,"1.5 liter drink"]]]
+  ]},
+  "Burger Lovers": {note:"Crispy burgers, fries and a cold drink.", items:[
+    ["Deal 1",999,[[2,"Crispy burgers"],[1,"Fries"],[1,"1 liter drink"]]],
+    ["Deal 2",1999,[[3,"Crispy burgers"],[3,"Crispy Joy fillets"],[1,"Fries"],[1,"1 liter drink"]]],
+    ["Deal 3",1899,[[3,"Crispy burgers"],[1,"Zingratha wrap"],[1,"Large fries"],[1,"1 liter drink"]]],
+    ["Deal 4",699,[[1,"Crispy burger"],[1,"Fries"],[1,"Regular drink"]]]
+  ]},
+  "Baby Happy": {note:"Kid-sized meals.", items:[
+    ["Baby Deal 1",499,[[1,"Baby burger"],[1,"Fries"],[1,"Regular drink"]]],
+    ["Baby Deal 2",650,[[1,"Baby burger"],[1,"Fries"],[5,"Chicken nuggets"],[1,"Regular drink"]]]
+  ]}
+};
+const happy = [
+  ["Happy Deal 1",2999,[[1,"Family pizza, any flavour"],[1,"Regular fries","free"],[1,"1.5 liter drink","free"]]],
+  ["Happy Deal 2",2099,[[1,"Large pizza, any flavour"],[1,"Regular fries","free"],[1,"1 liter drink","free"]]],
+  ["Happy Deal 3",1999,[[1,"Medium pizza"],[1,"Small pizza"],[2,"NR drinks","free"]]],
+  ["Happy Deal 4",1099,[[2,"Small pizzas, any flavour"]]]
+];
+
+const carte = [
+  ["Starters",[
+    ["Flaming wings","6 / 12 pcs","550 / 1,050"],["Oven bake wings","6 / 12 pcs","500 / 999"],
+    ["Hot wings","6 / 12 pcs","500 / 950"],["Honey wings","6 / 12 pcs","650 / 1,150"],
+    ["Garlic supreme bread","2 / 4 pcs","180 / 350"],["Cheese sticks","",550],
+    ["Arabic rolls","",600],["Behari rolls","",650]]],
+  ["Burgers",[
+    ["Crispy burger","",490],["Baby burger","",390],["Supreme burger","",799],
+    ["Joy special burger","",650],["Mexican BBQ grill burger","",650],["Joy cheese lava burger","",850]]],
+  ["Wraps & paratha",[["Zingratha","",450],["Crispy wraps","",750],["Zinger shawarma","",470]]],
+  ["Sandwiches",[["Mexican sandwich","",890],["Euro sandwich","",890],["Crispy stacker","",999],["Calzone chunks","",999]]],
+  ["Pasta & platters",[["Crispy pasta","",950],["Fettuccine Alfredo","",950],["Special platter","",1050],["Classic platter","",1100]]],
+  ["Nuggets & fries",[["Chicken nuggets","6 / 12 pcs","450 / 880"],["Regular fries","",350],["Large fries","",450],["Masala fries","",499],["Loaded fries","",800]]],
+  ["Sauces",[["Dip sauce","",80],["Cheese slice","",80]]],
+  ["Beverages",[["Next Cola 350 ml","",100],["1 liter","",170],["1.5 liter","",200],["Tin","",220],["Water, small","",70]]]
+];
+
+const scoops = [["Strawberry","#f58fb0"],["Kulfa","#f3ead2"],["Chocolate","#6b3a22"],["Coffee","#8c6649"],["Tutti Frutti","#f27fa0"],["Blueberry","#9d86e8"],["Mango","#f7b23b"],["Pistachio","#a9cf8e"],["Vanilla","#f6e3b4"]];
+
+/* ================= RENDER ================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+$("#marq").innerHTML = Array(2).fill(
+  ["Joy's Special","Malai Boti","Chicken Tikka","Crispy Burgers","Honey Wings","Zingratha","Loaded Fries","Kulfa Shake"]
+  .map(x=>`<span>${x}</span><i>●</i>`).join("")).join("");
+
+function renderPz(size){
+  $("#pzList").innerHTML = pizzas.map(([n,d])=>`<div class="pz rv in"><h4>${n}</h4><span class="price">${rs(pzPrice[size])}</span><p>${d}</p></div>`).join("");
+  const s = Math.max(size,1);
+  $("#spList").innerHTML = specials.map(([n,d])=>`<div class="pz rv in"><h4>${n}</h4><span class="price">${size===0?"From "+rs(1470):rs(spPrice[s])}</span><p>${d}</p></div>`).join("");
+  document.querySelectorAll(".pz .price").forEach(p=>{p.classList.remove("bump");void p.offsetWidth;p.classList.add("bump")});
+}
+renderPz(1);
+document.querySelectorAll("#sizeSwitch button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("#sizeSwitch button").forEach(x=>x.setAttribute("aria-pressed","false"));
+  b.setAttribute("aria-pressed","true"); renderPz(+b.dataset.s);
+}));
+
+const dealCard = ([name,price,items]) => `
+  <article class="deal tilt">
+    <span class="n">${name}</span>
+    <ul>${items.map(([q,t,f])=>`<li><b>${q}×</b><span>${t}</span>${f?`<em>${f}</em>`:""}</li>`).join("")}</ul>
+    <div class="foot"><span class="price">${rs(price)}</span>
+      <a class="order" target="_blank" rel="noopener" href="${WA+encodeURIComponent("I want to order "+name+" ("+rs(price)+") from Pizza & Joy")}">Order this</a></div>
+  </article>`;
+
+const tabsEl = $("#dealTabs");
+Object.keys(dealSets).forEach((k,i)=>{
+  const b = document.createElement("button");
+  b.role="tab"; b.textContent=k+" deals"; b.setAttribute("aria-selected",i===0);
+  b.onclick=()=>{tabsEl.querySelectorAll("button").forEach(x=>x.setAttribute("aria-selected","false"));b.setAttribute("aria-selected","true");showDeals(k)};
+  tabsEl.appendChild(b);
+});
+function showDeals(k){ $("#dealNote").textContent = dealSets[k].note; $("#dealGrid").innerHTML = dealSets[k].items.map(dealCard).join(""); bindTilt(); }
+showDeals("Pizza Wow");
+$("#happyGrid").innerHTML = happy.map(dealCard).join("");
+
+$("#carte").innerHTML = carte.map(([cat,rows])=>`
+  <div class="cat rv"><h3>${cat}</h3>${rows.map(([n,s,p])=>`
+    <div class="row"><span class="nm">${esc(n)}${s?`<small>${s}</small>`:""}</span><span class="fill"></span><span class="price">${typeof p==="number"?rs(p):"Rs "+p}</span></div>`).join("")}</div>`).join("");
+
+$("#scoops").innerHTML = scoops.map(([n,c])=>`<div class="scoop"><div class="ball" style="background:${c}"></div>${n}</div>`).join("");
+$("#yr").textContent = new Date().getFullYear();
+
+/* happy hour live badge (Pakistan time) */
+(function(){
+  const h = +new Intl.DateTimeFormat("en-GB",{hour:"numeric",hour12:false,timeZone:"Asia/Karachi"}).format(new Date()) % 24;
+  const on = (h>=12 && h<18) || (h>=0 && h<3);
+  const b = $("#liveBadge"); b.className = "live " + (on?"on":"off");
+  b.querySelector("span").textContent = on ? "Happy hour is on right now" : "Next window: 12 PM or 12 AM";
+})();
+
+/* nav + reveal */
+addEventListener("scroll",()=>$("#nav").classList.toggle("solid",scrollY>60),{passive:true});
+const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+
+/* 3D tilt on cards (responds to pointer) */
+function bindTilt(){
+  if(reduce || matchMedia("(hover:none)").matches) return;
+  document.querySelectorAll(".tilt").forEach(el=>{
+    if(el._t) return; el._t=1;
+    el.addEventListener("pointermove",e=>{
+      const r=el.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+      el.style.transform=`perspective(900px) rotateY(${x*10}deg) rotateX(${-y*10}deg) translateZ(6px)`;
+    });
+    el.addEventListener("pointerleave",()=>el.style.transform="");
+  });
+}
+bindTilt();
+
+
+/* ================= MOBILE 3D + APP BEHAVIOUR ================= */
+const isMobile = () => matchMedia("(max-width:760px)").matches;
+
+/* coverflow 3D for swipe carousels */
+function coverflow(grid, dotsEl){
+  const cards=[...grid.children];
+  if(dotsEl){ dotsEl.innerHTML=cards.map(()=>"<i></i>").join(""); }
+  function upd(){
+    if(!isMobile()){ cards.forEach(c=>{c.style.transform="";c.style.opacity=""}); return; }
+    const gr=grid.getBoundingClientRect(), mid=gr.left+gr.width/2; let best=0,bd=1e9;
+    cards.forEach((c,i)=>{
+      const r=c.getBoundingClientRect(), d=(r.left+r.width/2-mid)/gr.width;
+      if(Math.abs(d)<bd){bd=Math.abs(d);best=i}
+      if(reduce) return;
+      const k=Math.max(-1,Math.min(1,d));
+      c.style.transform=`rotateY(${-k*28}deg) scale(${1-Math.abs(k)*.1}) translateZ(${-Math.abs(k)*60}px)`;
+      c.style.opacity=1-Math.abs(k)*.35;
+    });
+    if(dotsEl) [...dotsEl.children].forEach((d,i)=>d.classList.toggle("on",i===best));
+  }
+  if(!grid._cf){ grid.addEventListener("scroll",()=>requestAnimationFrame(upd),{passive:true}); addEventListener("resize",upd); grid._cf=1; }
+  grid._upd=upd; upd();
+}
+const _showDeals = showDeals;
+showDeals = function(k){ _showDeals(k); const g=$("#dealGrid"); g.scrollLeft=0; coverflow(g,$("#dealDots")); };
+coverflow($("#dealGrid"),$("#dealDots"));
+coverflow($("#happyGrid"),$("#happyDots"));
+
+/* scroll-driven 3D tilt for cards on touch screens */
+if(!reduce && matchMedia("(hover:none)").matches){
+  const tilt3d=()=>{
+    const vh=innerHeight;
+    document.querySelectorAll(".sig,.cat,.visit-card,.credit-card,.ice-card").forEach(el=>{
+      const r=el.getBoundingClientRect(); if(r.bottom<0||r.top>vh) return;
+      const k=Math.max(-1,Math.min(1,((r.top+r.height/2)-vh/2)/(vh/2)));
+      el.style.transform=`perspective(800px) rotateX(${k*9}deg) translateZ(0)`;
+    });
+  };
+  addEventListener("scroll",()=>requestAnimationFrame(tilt3d),{passive:true}); tilt3d();
+}
+
+/* sticky chips: show after hero, scroll-spy active chip */
+(function(){
+  const chips=$("#chips"), links=[...chips.querySelectorAll("a")];
+  const secs=links.map(a=>document.querySelector(a.getAttribute("href")));
+  function spy(){
+    chips.classList.toggle("show", scrollY > $(".hero").offsetHeight - innerHeight*0.6);
+    let cur=0; secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top < 140) cur=i; });
+    links.forEach((a,i)=>a.classList.toggle("on",i===cur));
+    const on=links[cur]; if(chips.classList.contains("show") && chips._last!==cur){ chips._last=cur; chips.scrollTo({left:on.offsetLeft-16,behavior:"smooth"}); }
+  }
+  addEventListener("scroll",()=>requestAnimationFrame(spy),{passive:true}); spy();
+})();
+
+/* ================= THREE.JS PIZZA ================= */
+(function(){
+  if(!window.THREE){ return; }
+  const canvas = $("#pizza3d");
+  const renderer = new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  const scene = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(38,1,.1,100);
+
+  scene.add(new THREE.AmbientLight(0xffe2c0,.45));
+  const key = new THREE.DirectionalLight(0xfff1dd,1.1); key.position.set(3,6,4); scene.add(key);
+  const ember = new THREE.PointLight(0xff6a10,2.2,14); ember.position.set(-3,-1,3); scene.add(ember);
+  const rim = new THREE.PointLight(0xffc34d,1.4,12); rim.position.set(3,2,-3); scene.add(rim);
+
+  const pizza = new THREE.Group(); scene.add(pizza);
+  const R = 2.1, N = 8, seg = Math.PI*2/N;
+  const M = c => new THREE.MeshStandardMaterial({color:c,roughness:.7,metalness:0});
+  const crustM = M(0xc77a2e), baseM = M(0xe2a45a), sauceM = M(0xb8321d), cheeseM = new THREE.MeshStandardMaterial({color:0xffcf5a,roughness:.45,emissive:0x3a1a00,emissiveIntensity:.25});
+  const pepM = M(0xa8281a), oliveM = M(0x1d130d), capM = M(0x3d8a3a), onionM = M(0xe9c9d8);
+
+  // deterministic random
+  let seed=7; const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
+
+  const slices=[];
+  for(let i=0;i<N;i++){
+    const g = new THREE.Group(); const a0=i*seg;
+    const base = new THREE.Mesh(new THREE.CylinderGeometry(R,R,.16,24,1,false,a0,seg),baseM); g.add(base);
+    const sauce = new THREE.Mesh(new THREE.CylinderGeometry(R*.9,R*.9,.04,24,1,false,a0,seg),sauceM); sauce.position.y=.09; g.add(sauce);
+    const cheese = new THREE.Mesh(new THREE.CylinderGeometry(R*.88,R*.88,.05,24,1,false,a0,seg),cheeseM); cheese.position.y=.12; g.add(cheese);
+    const crust = new THREE.Mesh(new THREE.TorusGeometry(R*.95,.17,12,20,seg),crustM);
+    // align torus arc with the cylinder slice
+    crust.rotation.x=-Math.PI/2; crust.rotation.z=a0-Math.PI/2; crust.position.y=.1; g.add(crust);
+    // toppings
+    const put=(mesh,rMin,rMax)=>{const ang=a0+seg*(.18+rnd()*.64), r=rMin+rnd()*(rMax-rMin); mesh.position.set(Math.sin(ang)*r,.17,Math.cos(ang)*r); g.add(mesh)};
+    put(new THREE.Mesh(new THREE.CylinderGeometry(.24,.24,.05,20),pepM),.5,1.5);
+    put(new THREE.Mesh(new THREE.CylinderGeometry(.22,.22,.05,20),pepM),1.1,1.6);
+    for(let k=0;k<2;k++){const o=new THREE.Mesh(new THREE.TorusGeometry(.07,.035,8,14),oliveM);o.rotation.x=Math.PI/2;put(o,.4,1.7)}
+    for(let k=0;k<3;k++){const c=new THREE.Mesh(new THREE.BoxGeometry(.2,.04,.06),capM);c.rotation.y=rnd()*3;put(c,.3,1.7)}
+    const on=new THREE.Mesh(new THREE.TorusGeometry(.13,.02,6,16,Math.PI),onionM);on.rotation.x=Math.PI/2;put(on,.5,1.6);
+    g.userData.dir = new THREE.Vector3(Math.sin(a0+seg/2),0,Math.cos(a0+seg/2));
+    pizza.add(g); slices.push(g);
+  }
+
+  // embers
+  const pc=260, pos=new Float32Array(pc*3);
+  for(let i=0;i<pc;i++){pos[i*3]=(rnd()-.5)*14;pos[i*3+1]=(rnd()-.5)*9;pos[i*3+2]=(rnd()-.5)*8-2}
+  const pg=new THREE.BufferGeometry(); pg.setAttribute("position",new THREE.BufferAttribute(pos,3));
+  const embers=new THREE.Points(pg,new THREE.PointsMaterial({color:0xff9a3c,size:.05,transparent:true,opacity:.8}));
+  scene.add(embers);
+
+  let mobile=false;
+  function resize(){
+    const w=canvas.clientWidth,h=canvas.clientHeight; renderer.setSize(w,h,false);
+    cam.aspect=w/h; mobile = w<820;
+    cam.position.set(0, mobile?4.4:3.6, mobile?9.2:7.4); cam.lookAt(0,0,0); cam.updateProjectionMatrix();
+    pizza.position.set(mobile?0:2.3, mobile?1.7:-.1, 0); pizza.scale.setScalar(mobile?.66:.78);
+  }
+  addEventListener("resize",resize); resize();
+
+  let mx=0,my=0,spin=0,vel=0,tx=null;
+  addEventListener("pointermove",e=>{ if(e.pointerType==="mouse"){mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5} },{passive:true});
+  const stage=$(".hero-stage");
+  stage.addEventListener("touchstart",e=>{tx=e.touches[0].clientX},{passive:true});
+  stage.addEventListener("touchmove",e=>{ if(tx===null) return; const x=e.touches[0].clientX; vel=(x-tx)*.012; spin+=vel; tx=x; },{passive:true});
+  stage.addEventListener("touchend",()=>{tx=null},{passive:true});
+  addEventListener("deviceorientation",e=>{ if(e.gamma==null) return; mx=Math.max(-.5,Math.min(.5,e.gamma/60)); my=Math.max(-.5,Math.min(.5,(e.beta-45)/90)); },{passive:true});
+  const hero=$(".hero"), cap=$("#sliceCap");
+  let t=0, visible=true;
+  new IntersectionObserver(([e])=>visible=e.isIntersecting).observe(hero);
+
+  function frame(){
+    requestAnimationFrame(frame);
+    if(!visible) return;
+    t+=.01;
+    const p = Math.min(1,Math.max(0,scrollY/(hero.offsetHeight-innerHeight)));
+    const pull = reduce ? 0 : THREE.MathUtils.smoothstep(p,.1,.75);
+    slices.forEach((s,i)=>{
+      const lift = pull*(.4 + (i%2)*.2);
+      s.position.copy(s.userData.dir).multiplyScalar(lift);
+      s.position.y = pull*Math.sin(i*1.3+t*2)*.12 + (i===0?pull*.6:0);
+    });
+    if(tx===null){ vel*=.94; spin+=vel; }
+    pizza.rotation.y = (reduce?0:t*.25) + p*Math.PI*1.2 + mx*.5 + spin;
+    pizza.rotation.x = .25 + pull*.35 + my*.25;
+    pizza.rotation.z = -.12;
+    embers.rotation.y = t*.03; embers.position.y = (t*.25)%1;
+    ember.intensity = 2 + Math.sin(t*3)*.4;
+    cap.style.opacity = pull>.5 ? 1 : 0;
+    renderer.render(scene,cam);
+  }
+  frame();
+})();
+</script>
+</body>
+</html>
